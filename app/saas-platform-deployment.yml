@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saas-platform
+  namespace: demo
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: saas-platform
+      release: canary
+  template:
+    metadata:
+      labels:
+        app: saas-platform
+        release: canary
+    spec:
+      containers:
+      - name: saas-platform
+        image: registry-vpc.cn-shenzhen.aliyuncs.com/ctirobot/saas-platform:feature-cooperation
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 8080
