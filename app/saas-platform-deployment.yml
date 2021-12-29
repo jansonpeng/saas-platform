@@ -17,6 +17,21 @@ spec:
         release: canary
     spec:
       containers:
+        - env:
+              - name: JAVA_OPTS
+                value: >-
+                  -Xms64m -Xmx128m
+                  -Dreactor.netty.http.server.accessLogEnabled=true
+                  -Duser.timezone=Asia/Shanghai
+              - name: SPRING_OPTS
+                value: >-
+                  --spring.cloud.config.label=master --spring.profiles.active=staging
+                  --eureka.client.enabled=false
+                  --spring.cloud.kubernetes.enabled=true
+              - name: aliyun_logs_saas-platform-event-logs
+                value: /logs/event/event.log
+              - name: aliyun_logs_saas-platform-logs
+                value: /logs/service/service.log
       - name: saas-platform
         image: registry-vpc.cn-shenzhen.aliyuncs.com/ctirobot/saas-platform:feature-cooperation
         imagePullPolicy: Always
